@@ -21,15 +21,12 @@ public class Shipment {
     private String idShipment;
 
 
-    @NotNull
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @NotNull
     @Column(name = "shipping_day", nullable = false)
     private LocalDate shipping_day;
 
-    @NotNull
     @Column(name = "delivery_day", nullable = false)
     private LocalDate delivery_day;
 

@@ -17,24 +17,18 @@ public class User {
     @Column(name = "id_user", nullable = false, length = 36)
     private String idUser;
 
-    @NotNull
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    @NotNull
     @Column(name = "email", nullable = false, length = 255)
     private String email;
 
-    @NotNull
     @Column(name = "password",nullable = false, length = 255)
     private String password;
 
-    @NotNull
     @Column(name = "status")
     private boolean status;
 
-
-    @NotNull
     @Column(name = "image", nullable = false, length = 255)
     private String image;
 

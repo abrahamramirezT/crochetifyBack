@@ -19,7 +19,6 @@ public class Direction {
     @Column(name = "id_direction", nullable = false, length = 36)
     private String idDirection;
 
-    @NotNull
     @Column(name = "phone", nullable = false, length = 10)
     private String phone;
 

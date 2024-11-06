@@ -20,16 +20,13 @@ public class Orden {
     @Column(name = "id_orden", nullable = false, length = 36)
     private String idOrden;
 
-    @NotNull
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @NotNull
     @Column(name = "total", nullable = false)
     private double total;
 
 
-    @NotNull
     @Column(name = "purchase_day", nullable = false)
     private LocalDate purchase_day;
 

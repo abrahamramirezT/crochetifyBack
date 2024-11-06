@@ -18,11 +18,9 @@ public class Review {
     @Column(name = "id_review", nullable = false, length = 36)
     private String idReview;
 
-    @NotNull
     @Column(name = "score", nullable = false)
     private int score;
 
-    @NotNull
     @Column(name = "comment", nullable = false, length = 255)
     private int comment;
 

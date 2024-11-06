@@ -18,7 +18,6 @@ public class Cart {
     @Column(name = "id_cart", nullable = false, length = 36)
     private String idCart;
 
-    @NotNull
     @Column(name = "total", nullable = false, length = 255)
     private double total;
 

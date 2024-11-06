@@ -18,19 +18,15 @@ public class Stock {
     @Column(name = "id_stock", nullable = false, length = 36)
     private String idStock;
 
-    @NotNull
     @Column(name = "color", nullable = false, length = 255)
     private String color;
 
-    @NotNull
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @NotNull
     @Column(name = "image", nullable = false, length = 255)
     private String image;
 
-    @NotNull
     @Column(name = "status", nullable = false)
     private boolean status;
 
