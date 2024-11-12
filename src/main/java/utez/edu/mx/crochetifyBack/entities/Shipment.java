@@ -18,7 +18,7 @@ public class Shipment {
 
     @Id
     @Column(name = "id_shipment", nullable = false, length = 36)
-    private String idShipment;
+    private Long idShipment;
 
 
     @Column(name = "status", nullable = false)

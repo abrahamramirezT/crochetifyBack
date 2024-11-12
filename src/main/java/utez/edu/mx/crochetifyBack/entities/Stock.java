@@ -16,7 +16,7 @@ public class Stock {
 
     @Id
     @Column(name = "id_stock", nullable = false, length = 36)
-    private String idStock;
+    private Long idStock;
 
     @Column(name = "color", nullable = false, length = 255)
     private String color;
