@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +15,7 @@ public class Review {
 
     @Id
     @Column(name = "id_review", nullable = false, length = 36)
-    private String idReview;
+    private Long idReview;
 
     @Column(name = "score", nullable = false)
     private int score;

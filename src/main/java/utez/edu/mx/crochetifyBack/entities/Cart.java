@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +15,7 @@ public class Cart {
 
     @Id
     @Column(name = "id_cart", nullable = false, length = 36)
-    private String idCart;
+    private Long idCart;
 
     @Column(name = "total", nullable = false, length = 255)
     private double total;

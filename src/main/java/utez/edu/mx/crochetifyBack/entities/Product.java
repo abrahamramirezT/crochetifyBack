@@ -3,7 +3,6 @@ package utez.edu.mx.crochetifyBack.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +11,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class Product {
     @Id
     @Column(name = "id_product", nullable = false, length = 36)
-    private String idProduct;
+    private Long idProduct;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;

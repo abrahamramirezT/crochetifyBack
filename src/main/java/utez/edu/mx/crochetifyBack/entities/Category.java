@@ -3,7 +3,6 @@ package utez.edu.mx.crochetifyBack.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +11,7 @@ import java.util.List;
 public class Category {
     @Id
     @Column(name = "id_category", nullable = false, length = 36)
-    private String idCategory;
+    private Long idCategory;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;

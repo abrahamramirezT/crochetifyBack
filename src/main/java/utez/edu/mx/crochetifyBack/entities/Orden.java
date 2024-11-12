@@ -18,7 +18,7 @@ public class Orden {
 
     @Id
     @Column(name = "id_orden", nullable = false, length = 36)
-    private String idOrden;
+    private Long idOrden;
 
     @Column(name = "status", nullable = false)
     private boolean status;

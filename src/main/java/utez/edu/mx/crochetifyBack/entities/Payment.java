@@ -16,7 +16,7 @@ public class Payment {
 
     @Id
     @Column(name = "id_payment", nullable = false, length = 36)
-    private String idPayment;
+    private Long idPayment;
 
     @Column(name = "amount", nullable = false)
     private double amount;
