@@ -32,13 +32,13 @@ public class WebSecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/crochetify/login").permitAll()
                         // .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                         // .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                         // .requestMatchers(new AntPathRequestMatcher("/v3/admin/**")).hasRole("ADMIN")
                         // .requestMatchers(new AntPathRequestMatcher("/v3/user/**")).hasAnyRole("USER",
                         // "ADMIN")
-                        // .anyRequest().authenticated()
+                         //.anyRequest().authenticated()
                         .anyRequest().permitAll())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

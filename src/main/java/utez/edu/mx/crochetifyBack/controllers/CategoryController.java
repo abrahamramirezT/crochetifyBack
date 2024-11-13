@@ -9,7 +9,7 @@ import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryUpdateStatusRequest;
 import utez.edu.mx.crochetifyBack.services.category.CategoryService;
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
@@ -43,7 +43,5 @@ public class CategoryController {
         ResponseList response = categoryService.getCategories();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 
 }

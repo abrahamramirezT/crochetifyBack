@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table( name = "user")
+@Table( name = "direction")
 public class Direction {
 
     @Id
