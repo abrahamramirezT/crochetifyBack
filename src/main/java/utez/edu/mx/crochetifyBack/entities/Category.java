@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @Builder
@@ -24,5 +26,7 @@ public class Category {
     @Column(name = "status")
     private boolean status;
 
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products;
 
 }
