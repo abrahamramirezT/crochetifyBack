@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
+import utez.edu.mx.crochetifyBack.dto.UserDto;
 import utez.edu.mx.crochetifyBack.dto.requests.user.UserCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.user.UserUpdateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.user.UserUpdateStatusRequest;
@@ -31,6 +34,8 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public ResponseObject createUser(UserCreateRequest request) {
@@ -116,7 +121,7 @@ public class UserServiceImp implements UserService {
             User currentUser = userRepository.findById(idUser)
                     .orElseThrow(() -> new CustomNotFoundException("Usuario con ID " + idUser + " no encontrado"));
 
-            return createResponseObject("Usuario recuperado con éxito", currentUser);
+            return createResponseObject("Usuario recuperado con éxito", userToDto(currentUser));
 
         } catch (CustomNotFoundException e) {
             log.warn("Intento de recuperar un usuario que no existe: {}", e.getMessage());
@@ -136,7 +141,8 @@ public class UserServiceImp implements UserService {
             if (users.isEmpty()) {
                 throw new CustomNotFoundException("No existen usuarios registrados");
             }
-            return createResponseList("Usuario recuperado con éxito", users);
+            
+            return createResponseList("Usuario recuperado con éxito", usersToDtoList(users));
         } catch (CustomNotFoundException e) {
             log.warn("Error: {}", e.getMessage());
             throw e;
@@ -166,16 +172,26 @@ public class UserServiceImp implements UserService {
         }
     }
 
-    private ResponseObject createResponseObject(String message, User user) {
+    private ResponseObject createResponseObject(String message, UserDto user) {
         Map<String, Object> response = new HashMap<>();
         response.put("user", user);
         return new ResponseObject(true, message, response);
     }
 
-    private ResponseList createResponseList(String message, List<User> users) {
+    private ResponseList createResponseList(String message, List<UserDto> users) {
         Map<String, List<?>> response = new HashMap<>();
         response.put("users", users);
         return new ResponseList(true, message, response);
+    }
+
+    private List<UserDto> usersToDtoList(List<User> users) {
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
+    }
+
+    private UserDto userToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 
 }
