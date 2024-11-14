@@ -1,18 +1,17 @@
 package utez.edu.mx.crochetifyBack.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @NoArgsConstructor
-@Entity
-@Builder
 @AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@Entity
 @Table(name = "product")
 public class Product {
     @Id
@@ -29,13 +28,17 @@ public class Product {
     @Column(name = "status")
     private boolean status;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_category", // Nombre de la tabla de unión
-            joinColumns = @JoinColumn(name = "product_id"), // Clave foránea hacia Product
-            inverseJoinColumns = @JoinColumn(name = "category_id") // Clave foránea hacia Category
-    )
-    private Set<Category> categories;
+
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "product_category",
+            joinColumns = { @JoinColumn(name = "product_id") },
+            inverseJoinColumns = { @JoinColumn(name = "category_id") })
+    private Set<Category> categories = new HashSet<>();
 
 
 }
