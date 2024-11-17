@@ -1,17 +1,17 @@
 package utez.edu.mx.crochetifyBack.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "category")
 public class Category {
@@ -26,7 +26,13 @@ public class Category {
     @Column(name = "status")
     private boolean status;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Product> products;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "categories")
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
 
 }
