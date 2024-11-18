@@ -5,13 +5,19 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
 @Data
 @NoArgsConstructor
-public class StockCreateRequest {
+public class StockUpdateRequest {
+    private Long idStock;
 
     private String color;
+
     private Double price;
-    private int quantity;
-    private Long productId;
+
+    private Integer quantity;
+
+    private Boolean status;
+
     private List<String> images;
 }

@@ -2,7 +2,8 @@ package utez.edu.mx.crochetifyBack.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,8 +31,12 @@ public class Stock {
     @Column(name = "status")
     private boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")  // Esto crea la clave foránea en la tabla 'pedido'
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @OneToMany(mappedBy = "stock")
+    private List<Image> images;
+
 
 }
