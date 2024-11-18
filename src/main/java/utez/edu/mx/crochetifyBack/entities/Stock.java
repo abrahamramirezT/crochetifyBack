@@ -1,33 +1,42 @@
 package utez.edu.mx.crochetifyBack.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+import java.util.List;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "stock")
 public class Stock {
 
     @Id
-    @Column(name = "id_stock", nullable = false, length = 36)
+    @Column(name = "id_stock")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idStock;
 
-    @Column(name = "color", nullable = false, length = 255)
+    @Column(name = "color")
     private String color;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "image", nullable = false, length = 255)
-    private String image;
+    @Column(name= "price")
+    private double price;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private boolean status;
+
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @OneToMany(mappedBy = "stock")
+    private List<Image> images;
+
 
 }

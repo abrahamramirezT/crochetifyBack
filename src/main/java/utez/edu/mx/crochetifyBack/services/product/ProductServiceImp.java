@@ -30,10 +30,8 @@ public class ProductServiceImp implements  ProductService {
 
     public ResponseObject createProduct(ProductCreateRequest request) {
         try {
-            // Cargar las categorías correspondientes a los IDs proporcionados en el request
             Set<Category> categories = new HashSet<>(categoryRepository.findAllById(request.getCategoryIds()));
 
-            // Construir el objeto Product con las categorías
             Product product = Product.builder()
                     .name(request.getName())
                     .description(request.getDescription())
@@ -41,7 +39,6 @@ public class ProductServiceImp implements  ProductService {
                     .categories(categories)
                     .build();
 
-            // Guardar el producto en la base de datos
             productRepository.save(product);
 
             return new ResponseObject(true, "Producto registrado con éxito", null);
@@ -55,12 +52,10 @@ public class ProductServiceImp implements  ProductService {
     @Override
     public ResponseObject updateProduct(Long id, ProductCreateRequest request) {
         try {
-            // Buscar el producto por ID
             Product currentProduct = productRepository.findById(id)
                     .orElseThrow(() -> new CustomNotFoundException(
                             "Producto con ID " + id + " no encontrado"));
 
-            // Actualizar los campos de name y description si son diferentes
             if (!currentProduct.getName().equals(request.getName())) {
                 currentProduct.setName(request.getName());
             }
@@ -68,13 +63,11 @@ public class ProductServiceImp implements  ProductService {
                 currentProduct.setDescription(request.getDescription());
             }
 
-            // Actualizar las categorías si se proporciona una lista de IDs de categorías en el request
             if (request.getCategoryIds() != null && !request.getCategoryIds().isEmpty()) {
                 Set<Category> categories = new HashSet<>(categoryRepository.findAllById(request.getCategoryIds()));
                 currentProduct.setCategories(categories);
             }
 
-            // Guardar el producto actualizado en la base de datos
             productRepository.save(currentProduct);
 
             return new ResponseObject(true, "Producto actualizado con éxito", null);
