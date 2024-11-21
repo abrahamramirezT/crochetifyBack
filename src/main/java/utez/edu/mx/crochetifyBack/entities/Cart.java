@@ -19,7 +19,7 @@ public class Cart {
     private String idCart;
 
     @Column(name = "total", nullable = false, length = 255)
-    private double total1;
+    private double total;
 
 
 
