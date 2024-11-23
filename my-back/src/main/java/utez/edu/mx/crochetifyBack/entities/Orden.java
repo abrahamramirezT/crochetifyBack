@@ -1,17 +1,14 @@
 package utez.edu.mx.crochetifyBack.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
-
-@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "orden")
 public class Orden {
@@ -29,6 +26,8 @@ public class Orden {
 
     @Column(name = "purchase_day", nullable = false)
     private LocalDate purchase_day;
+
+
 
 
 }
