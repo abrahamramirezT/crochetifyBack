@@ -38,10 +38,11 @@ public class JWTUtils {
     }
 
     //generarl token con el rol y el correo
-    public String generateAccessToken(String email, String role) {
+    public String generateAccessToken(String email, String role, Long idUser) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)
+                .claim("idUser",idUser)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
                 .signWith(getSignatureKey(), SignatureAlgorithm.HS256)
