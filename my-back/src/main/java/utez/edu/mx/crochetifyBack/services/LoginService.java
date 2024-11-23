@@ -38,7 +38,8 @@ public class LoginService {
             }
 
             String role = user.getRole().getName().name();
-            String token = jwtUtils.generateAccessToken(email, role);
+            Long idUser = user.getIdUser();
+            String token = jwtUtils.generateAccessToken(email, role,idUser);
 
             return createResponse("Inicio de sesion exitoso", token);
 
