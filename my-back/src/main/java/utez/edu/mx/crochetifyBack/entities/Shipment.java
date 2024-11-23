@@ -1,37 +1,37 @@
 package utez.edu.mx.crochetifyBack.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "shipment")
 public class Shipment {
 
     @Id
-    @Column(name = "id_shipment", nullable = false, length = 36)
+    @Column(name = "id_shipment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idShipment;
 
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "status")
+    private int status;
 
-    @Column(name = "shipping_day", nullable = false)
+    @Column(name = "shipping_day")
     private LocalDate shipping_day;
 
-    @Column(name = "delivery_day", nullable = false)
+    @Column(name = "delivery_day")
     private LocalDate delivery_day;
-
-
-
 
 
 
