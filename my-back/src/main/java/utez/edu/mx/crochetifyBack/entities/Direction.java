@@ -1,24 +1,32 @@
 package utez.edu.mx.crochetifyBack.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table( name = "direction")
 public class Direction {
 
     @Id
-    @Column(name = "id_direction", nullable = false, length = 36)
+    @Column(name = "id_direction")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDirection;
 
-    @Column(name = "phone", nullable = false, length = 10)
+    @Column(name = "direction")
+    private String direction;
+
+    @Column(name = "phone")
     private String phone;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 

@@ -151,7 +151,7 @@ public class StockServiceImp implements StockService{
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> stockMap = mapper.convertValue(updatedStock, Map.class);
 
-            return new ResponseObject(true, "Stock actualizado con éxito", stockMap);
+            return new ResponseObject(true, "Stock actualizado con éxito", null);
 
         } catch (Exception e) {
             log.error("Ocurrió un error al actualizar el stock: {}", e.getMessage(), e);
