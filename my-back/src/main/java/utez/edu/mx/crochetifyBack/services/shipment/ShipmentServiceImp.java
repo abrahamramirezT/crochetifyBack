@@ -8,9 +8,11 @@ import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentUpdateRequest;
+import utez.edu.mx.crochetifyBack.entities.Orden;
 import utez.edu.mx.crochetifyBack.entities.Shipment;
 import utez.edu.mx.crochetifyBack.exceptions.CustomException;
 import utez.edu.mx.crochetifyBack.exceptions.CustomNotFoundException;
+import utez.edu.mx.crochetifyBack.repositories.OrdenRepository;
 import utez.edu.mx.crochetifyBack.repositories.ShipmentRepository;
 
 import java.util.HashMap;
@@ -26,24 +28,34 @@ public class ShipmentServiceImp implements ShipmentService{
     @Autowired
     private ShipmentRepository shipmentRepository;
 
+    @Autowired
+    private OrdenRepository ordenRepository;
+
     @Override
     public ResponseObject createShipment(ShipmentCreateRequest request) {
         try {
+            Orden orden = ordenRepository.findById(request.getIdOrden())
+                    .orElseThrow(() -> new CustomException("Orden no encontrada con el ID: " + request.getIdOrden()));
+
             Shipment shipment = Shipment.builder()
                     .status(1)
                     .shipping_day(request.getShipping_day())
+                    .orden(orden)
                     .build();
 
             Shipment savedShipment = shipmentRepository.save(shipment);
 
             return new ResponseObject(true, "Shipment registrado con éxito", null);
 
+        } catch (CustomException e) {
+            log.error("Error al registrar Shipment: {}", e.getMessage(), e);
+            throw e;
         } catch (Exception e) {
-            // Manejar errores y retornar una respuesta de error
             log.error("Ocurrió un error al registrar el Shipment: {}", e.getMessage(), e);
             throw new CustomException("Ocurrió un error al registrar el Shipment");
         }
     }
+
 
     @Override
     public ResponseList getShipments() {

@@ -1,5 +1,6 @@
 package utez.edu.mx.crochetifyBack.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,18 +15,23 @@ import java.time.LocalDate;
 public class Orden {
 
     @Id
-    @Column(name = "id_orden", nullable = false, length = 36)
+    @Column(name = "id_orden")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOrden;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private boolean status;
 
-    @Column(name = "total", nullable = false)
+    @Column(name = "total")
     private double total;
 
 
-    @Column(name = "purchase_day", nullable = false)
+    @Column(name = "purchase_day")
     private LocalDate purchase_day;
+
+    @OneToOne(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Shipment shipment;
 
 
 
