@@ -1,5 +1,7 @@
 package utez.edu.mx.crochetifyBack.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,10 +13,12 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -44,4 +48,7 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.PERSIST)
     private Role role;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore // Ignoramos la relación inversa para evitar ciclos
+    private Cart cart;
 }
