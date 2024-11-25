@@ -49,6 +49,6 @@ public class User {
     private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore // Ignoramos la relación inversa para evitar ciclos
+    @JsonIgnore 
     private Cart cart;
 }
