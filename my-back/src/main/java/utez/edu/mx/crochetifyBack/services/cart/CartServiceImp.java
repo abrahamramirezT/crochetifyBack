@@ -40,22 +40,30 @@ public class CartServiceImp implements CartService {
         @Override
         public ResponseObject getCartById(Long idCart) {
                 Cart cart = cartRepository.findById(idCart)
-                                .orElseThrow(() -> new CustomNotFoundException("Producto no encontrado"));
+                                .orElseThrow(() -> new CustomNotFoundException("Carrito no encontrado"));
                 CartResponse responseDTO = convertToCartResponseDTO(cart);
                 return createResponseObject("Carrito recuperado con exito", responseDTO);
         }
 
         @Override
         public ResponseObject createCart(CartCreateRequest request) {
-
                 try {
-
                         User currentUser = userRepository.findById(request.getIdUser())
                                         .orElseThrow(() -> new CustomNotFoundException(
                                                         "Usuario con ID " + request.getIdUser() + " no encontrado"));
 
+                        Optional<Cart> existingCart = cartRepository.findByUser(currentUser);
+                        if (existingCart.isPresent()) {
+                                throw new CustomNotFoundException("El usuario ya cuenta con un carrito activo");
+                        }
+
                         Stock currentStock = stockRepository.findById(request.getIdStock())
                                         .orElseThrow(() -> new CustomNotFoundException("Stock no encontrado"));
+
+                        if (request.getQuantity() <= 0) {
+                                throw new CustomNotFoundException(
+                                                "La cantidad debe ser mayor a 0 para crear un carrito");
+                        }
 
                         Cart currentCart = Cart.builder()
                                         .user(currentUser)
@@ -76,18 +84,15 @@ public class CartServiceImp implements CartService {
                                         .quantity(request.getQuantity())
                                         .build();
 
-                        Object ob = cartProduct;
-
-                        System.out.println(ob);
                         List<CartProduct> prod = new ArrayList<>();
                         prod.add(cartProduct);
                         currentCart.setCartProducts(prod);
 
                         cartRepository.save(currentCart);
-                        return createResponseObject("Carrito creado", null);
+                        return createResponseObject("Carrito creado correctamente", null);
 
                 } catch (Exception e) {
-                        throw new CustomNotFoundException(e.getMessage());
+                        throw new CustomNotFoundException("Error al crear el carrito: " + e.getMessage());
                 }
         }
 
@@ -104,6 +109,7 @@ public class CartServiceImp implements CartService {
                                         .cartId(currentCart.getIdCart())
                                         .stockId(currentStock.getIdStock())
                                         .build();
+
                         Optional<CartProduct> existingCartProduct = currentCart.getCartProducts().stream()
                                         .filter(cp -> cp.getId().getCartId().equals(cartProductId.getCartId()) &&
                                                         cp.getId().getStockId().equals(cartProductId.getStockId()))
@@ -111,39 +117,57 @@ public class CartServiceImp implements CartService {
 
                         if (existingCartProduct.isPresent()) {
                                 CartProduct cartProduct = existingCartProduct.get();
-                                int newQuantity = cartProduct.getQuantity() + request.getQuantity();
-                                cartProduct.setQuantity(newQuantity);
 
-                                double updatedTotal = currentCart.getTotal()
-                                                + (currentStock.getPrice() * request.getQuantity());
-                                currentCart.setTotal(updatedTotal);
+                                if (request.getQuantity() == 0) {
+                                        currentCart.getCartProducts().remove(cartProduct);
+
+                                        double updatedTotal = currentCart.getTotal()
+                                                        - (cartProduct.getQuantity() * currentStock.getPrice());
+                                        currentCart.setTotal(updatedTotal);
+                                } else {
+                                        int difference = request.getQuantity() - cartProduct.getQuantity();
+
+                                        cartProduct.setQuantity(request.getQuantity());
+
+                                        double updatedTotal = currentCart.getTotal()
+                                                        + (currentStock.getPrice() * difference);
+                                        currentCart.setTotal(updatedTotal);
+                                }
                         } else {
-                                CartProduct newCartProduct = CartProduct.builder()
-                                                .id(cartProductId)
-                                                .cart(currentCart)
-                                                .stock(currentStock)
-                                                .quantity(request.getQuantity())
-                                                .build();
+                                if (request.getQuantity() != 0) {
+                                        CartProduct newCartProduct = CartProduct.builder()
+                                                        .id(cartProductId)
+                                                        .cart(currentCart)
+                                                        .stock(currentStock)
+                                                        .quantity(request.getQuantity())
+                                                        .build();
 
-                                currentCart.getCartProducts().add(newCartProduct);
+                                        currentCart.getCartProducts().add(newCartProduct);
 
-                                double updatedTotal = currentCart.getTotal()
-                                                + (currentStock.getPrice() * request.getQuantity());
-                                currentCart.setTotal(updatedTotal);
+                                        double updatedTotal = currentCart.getTotal()
+                                                        + (currentStock.getPrice() * request.getQuantity());
+                                        currentCart.setTotal(updatedTotal);
+                                }
+
                         }
 
                         cartRepository.save(currentCart);
-                        return createResponseObject("Carrito acutalizado", null);
+
+                        return createResponseObject("Carrito actualizado", null);
 
                 } catch (Exception e) {
-                        throw new CustomNotFoundException(e.getMessage());
+                        throw new CustomNotFoundException("Error al actualizar el carrito :" + e.getMessage());
                 }
         }
 
         private ResponseObject createResponseObject(String message, CartResponse cart) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("cart", cart);
-                return new ResponseObject(true, message, response);
+                if (cart != null) {
+                        Map<String, Object> response = new HashMap<>();
+                        response.put("cart", cart);
+                        return new ResponseObject(true, message, response);
+
+                }
+                return new ResponseObject(true, message, null);
         }
 
         public CartResponse convertToCartResponseDTO(Cart cart) {
