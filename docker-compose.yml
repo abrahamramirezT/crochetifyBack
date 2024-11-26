@@ -19,6 +19,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: passwordcrochet
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
-      - "8081:8080"
+      - "8087:8080"
     depends_on:
       - mysql-db
