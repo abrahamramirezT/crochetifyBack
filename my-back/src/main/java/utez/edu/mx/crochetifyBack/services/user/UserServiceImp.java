@@ -40,6 +40,10 @@ public class UserServiceImp implements UserService {
     @Override
     public ResponseObject createUser(UserCreateRequest request) {
         try {
+            User existingUser = userRepository.findByEmail(request.getEmail());
+            if (existingUser != null) {
+                throw new CustomException("El correo electrónico ya está registrado");
+            }
             Role userRole = Role.builder()
                     .name(ERole.USER)
                     .build();
@@ -58,7 +62,7 @@ public class UserServiceImp implements UserService {
 
         } catch (Exception e) {
             log.error("Ocurrió un error al registrar el usuario: {}", e.getMessage(), e);
-            throw new CustomException("Ocurrio un error al registrar el usaurio");
+            throw new CustomException("Error al registrar el usuario :" + e.getMessage());
         }
 
     }
