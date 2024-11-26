@@ -99,8 +99,15 @@ public class CartServiceImp implements CartService {
         @Override
         public ResponseObject updateCart(CartUpdateRequest request) {
                 try {
-                        Cart currentCart = cartRepository.findById(request.getIdCart())
-                                        .orElseThrow(() -> new CustomNotFoundException("Carrito no encontrado"));
+                        User currentUser = userRepository.findById(request.getIdUser())
+                        .orElseThrow(() -> new CustomNotFoundException(
+                                        "Usuario no encontrado"));
+                        
+                          Optional<Cart> existingCart = cartRepository.findByUser(currentUser);
+                        if (existingCart.isEmpty()) {
+                                throw new CustomNotFoundException("El usuario no cuenta con un carrito registrado");
+                        }
+                        Cart currentCart = existingCart.get();
 
                         Stock currentStock = stockRepository.findById(request.getIdStock())
                                         .orElseThrow(() -> new CustomNotFoundException("Stock no encontrado"));
