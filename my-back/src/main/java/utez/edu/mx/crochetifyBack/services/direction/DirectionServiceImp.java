@@ -10,6 +10,7 @@ import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionUpdateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionUserRequest;
+import utez.edu.mx.crochetifyBack.dto.requests.direction.SetDefaultDirectionRequest;
 import utez.edu.mx.crochetifyBack.entities.Direction;
 import utez.edu.mx.crochetifyBack.entities.User;
 import utez.edu.mx.crochetifyBack.exceptions.CustomException;
@@ -20,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class DirectionServiceImp implements DirectionService{
@@ -118,7 +121,49 @@ public class DirectionServiceImp implements DirectionService{
         }
     }
 
+    @Override
+    public ResponseObject setDefaultDirection(SetDefaultDirectionRequest request) {
+        try {
+            if (request.getDirectionId() == null || request.getUserId() == null) {
+                throw new CustomException("El ID de la dirección o del usuario no puede ser nulo");
+            }
 
+            User user = userRepository.findById(request.getUserId())
+                    .orElseThrow(() -> new CustomException("Usuario no encontrado"));
+
+            List<Direction> directions = directionRepository.findByUser(user);
+
+            if (directions.isEmpty()) {
+                return new ResponseObject(true, "El usuario no tiene direcciones registradas", null);
+            }
+
+            directions.forEach(direction -> {
+                if (direction.isDefault()) {
+                    direction.setDefault(false);
+                    directionRepository.save(direction);
+                }
+            });
+
+            Direction direction = directionRepository.findById(request.getDirectionId())
+                    .orElseThrow(() -> new CustomException("Dirección no encontrada"));
+
+            if (!direction.getUser().equals(user)) {
+                throw new CustomException("La dirección no pertenece al usuario actual");
+            }
+
+            direction.setDefault(true);
+            directionRepository.save(direction);
+
+            return new ResponseObject(true, "Dirección marcada como predeterminada exitosamente", null);
+
+        } catch (CustomException e) {
+            log.error("Error de validación: {}", e.getMessage());
+            return new ResponseObject(false, e.getMessage(), null);
+        } catch (Exception e) {
+            log.error("Ocurrió un error inesperado: {}", e.getMessage(), e);
+            throw new CustomException("Ocurrió un error inesperado al establecer la dirección predeterminada");
+        }
+    }
 
 
 

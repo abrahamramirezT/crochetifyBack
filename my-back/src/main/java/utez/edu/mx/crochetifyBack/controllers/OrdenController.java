@@ -10,7 +10,6 @@ import utez.edu.mx.crochetifyBack.dto.requests.orden.OrdenCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentCreateRequest;
 import utez.edu.mx.crochetifyBack.services.orden.OrdenService;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/orden")
 public class OrdenController {

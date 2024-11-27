@@ -42,7 +42,7 @@ public class User {
     @Column(name = "status")
     private boolean status;
 
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "LONGTEXT")
     private String image;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.PERSIST)

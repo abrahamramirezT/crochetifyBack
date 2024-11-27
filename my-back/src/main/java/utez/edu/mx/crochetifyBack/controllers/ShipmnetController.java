@@ -10,7 +10,6 @@ import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentUpdateRequest;
 import utez.edu.mx.crochetifyBack.services.shipment.ShipmentService;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/shipment")
 public class ShipmnetController {
