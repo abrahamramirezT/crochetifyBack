@@ -18,7 +18,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idImage;
 
-    @Column(name = "image")
+    @Column(name = "image",columnDefinition = "mediumtext")
     private String image;
 
     @ManyToOne()

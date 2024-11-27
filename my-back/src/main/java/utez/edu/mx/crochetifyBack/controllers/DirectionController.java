@@ -10,7 +10,6 @@ import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionUpdateRequest;
 import utez.edu.mx.crochetifyBack.services.direction.DirectionService;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/directions")
 public class DirectionController {

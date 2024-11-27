@@ -28,8 +28,6 @@ public class Product {
     @Column(name = "status")
     private boolean status;
 
-
-
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -40,5 +38,6 @@ public class Product {
             inverseJoinColumns = { @JoinColumn(name = "category_id") })
     private Set<Category> categories = new HashSet<>();
 
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Review> reviews = new HashSet<>();
 }
