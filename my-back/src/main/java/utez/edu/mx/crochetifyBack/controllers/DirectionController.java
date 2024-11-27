@@ -8,6 +8,7 @@ import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionCreateRequest;
 
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionUpdateRequest;
+import utez.edu.mx.crochetifyBack.dto.requests.direction.SetDefaultDirectionRequest;
 import utez.edu.mx.crochetifyBack.services.direction.DirectionService;
 
 @RestController
@@ -35,6 +36,13 @@ public class DirectionController {
     public ResponseEntity<ResponseObject> getDirectionsByUserId(@PathVariable Long idUser) {
         ResponseObject response = directionService.getDirectionsByUserId(idUser);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/set-default")
+    public ResponseEntity<ResponseObject> setDefaultDirection(@RequestBody SetDefaultDirectionRequest request) {
+        ResponseObject response = directionService.setDefaultDirection(request);
+        return ResponseEntity.status(response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST).body(response);
     }
 
 }

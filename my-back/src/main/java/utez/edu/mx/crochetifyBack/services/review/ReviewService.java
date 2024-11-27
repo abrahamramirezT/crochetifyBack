@@ -6,4 +6,5 @@ import utez.edu.mx.crochetifyBack.dto.requests.review.ReviewCreateRequest;
 
 public interface ReviewService {
     ResponseObject createReview(ReviewCreateRequest request);
+    ResponseObject getReviewsByProductId(Long productId);
 }

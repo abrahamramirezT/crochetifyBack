@@ -10,6 +10,6 @@ import java.util.List;
 public class ReviewCreateRequest {
     private String comment;
     private int score;
-    private List<Long> productIds;
+    private Long productId;
 
 }

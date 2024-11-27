@@ -3,10 +3,7 @@ package utez.edu.mx.crochetifyBack.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.review.ReviewCreateRequest;
 import utez.edu.mx.crochetifyBack.services.review.ReviewService;
@@ -21,6 +18,12 @@ public class ReviewController {
     public ResponseEntity<ResponseObject> createReview(@RequestBody ReviewCreateRequest request){
         ResponseObject response = reviewService.createReview(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{idProduct}")
+    public ResponseEntity<ResponseObject> getReviewsByProductId(@PathVariable Long idProduct) {
+        ResponseObject response = reviewService.getReviewsByProductId(idProduct);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

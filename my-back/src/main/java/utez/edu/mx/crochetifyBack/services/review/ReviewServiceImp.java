@@ -12,8 +12,8 @@ import utez.edu.mx.crochetifyBack.exceptions.CustomException;
 import utez.edu.mx.crochetifyBack.repositories.ProductRepository;
 import utez.edu.mx.crochetifyBack.repositories.ReviewRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,15 +30,16 @@ public class ReviewServiceImp  implements ReviewService{
     @Override
     public ResponseObject createReview(ReviewCreateRequest request) {
         try {
-
-            Set<Product> products = new HashSet<>(productRepository.findAllById(request.getProductIds()));
+            Product product = productRepository.findById(request.getProductId())
+                    .orElseThrow(() -> new CustomException("Producto no encontrado"));
 
             Review review = Review.builder()
                     .comment(request.getComment())
                     .score(request.getScore())
-                    .product(products)
+                    .product(product)
                     .build();
 
+            // Guardar la reseña
             reviewRepository.save(review);
 
             return new ResponseObject(true, "Review registrada con éxito", null);
@@ -48,4 +49,39 @@ public class ReviewServiceImp  implements ReviewService{
             throw new CustomException("Ocurrió un error al registrar la review");
         }
     }
+
+    @Override
+    public ResponseObject getReviewsByProductId(Long productId) {
+        try {
+            if (productId == null) {
+                throw new CustomException("El ID del producto no puede ser nulo");
+            }
+
+            List<Review> reviews = reviewRepository.findByProduct_IdProduct(productId);
+
+            if (reviews.isEmpty()) {
+                return new ResponseObject(true, "No se encontraron reseñas asociadas al producto", Collections.emptyMap());
+            }
+
+            Map<String, Object> reviewMap = reviews.stream()
+                    .collect(Collectors.toMap(
+                            review -> String.valueOf(review.getIdReview()),
+                            review -> Map.of(
+                                    "idReview", review.getIdReview(),
+                                    "comment", review.getComment(),
+                                    "score", review.getScore()
+                            )
+                    ));
+
+            return new ResponseObject(true, "Reseñas encontradas con éxito", reviewMap);
+
+        } catch (Exception e) {
+            log.error("Ocurrió un error al buscar las reseñas: {}", e.getMessage(), e);
+            throw new CustomException("Ocurrió un error al buscar las reseñas");
+        }
+    }
+
+
+
+
 }

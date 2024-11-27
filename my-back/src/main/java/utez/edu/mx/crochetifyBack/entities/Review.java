@@ -3,6 +3,9 @@ package utez.edu.mx.crochetifyBack.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,7 +26,7 @@ public class Review {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "id_product")
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
     private Product product;
 }
