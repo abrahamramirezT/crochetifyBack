@@ -1,14 +1,16 @@
 version: '3.8'
 services:
   mysql-db:
-     image: mysql:8.0
-     environment:
-       MYSQL_ROOT_PASSWORD: rootpassword
-       MYSQL_DATABASE: crochetify
-       MYSQL_USER: crochet
-       MYSQL_PASSWORD: passwordcrochet
-     volumes:
-       - ./mysql-data:/var/lib/mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: crochetify
+      MYSQL_USER: crochet
+      MYSQL_PASSWORD: passwordcrochet
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    restart: always
+
   app:
     build:
       context: ./my-back
@@ -22,5 +24,4 @@ services:
       - "8087:8080"
     depends_on:
       - mysql-db
-
-      #Prueba compose
+    restart: always
