@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartUpdateRequest {
-    private Long idCart;
+    private Long idUser;
     private Long idStock;
     private int quantity;
 }

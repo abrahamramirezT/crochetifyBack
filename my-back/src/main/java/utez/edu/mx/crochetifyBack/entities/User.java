@@ -47,8 +47,8 @@ public class User {
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.PERSIST)
     private Role role;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore 
-    private Cart cart;
+    private Cart cart; 
 }
