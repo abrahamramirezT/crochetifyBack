@@ -28,6 +28,9 @@ public class Direction {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "is_default")
+    private boolean isDefault;
+
 
 
 }

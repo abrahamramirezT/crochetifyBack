@@ -1,10 +1,15 @@
 package utez.edu.mx.crochetifyBack.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -25,7 +30,6 @@ public class Orden {
     @Column(name = "total")
     private double total;
 
-
     @Column(name = "purchase_day")
     private LocalDate purchase_day;
 
@@ -33,6 +37,14 @@ public class Orden {
     @JsonIgnore
     private Shipment shipment;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<OrdenProduct> ordenProducts = new ArrayList<>();
 
 
 

@@ -1,27 +1,32 @@
 package utez.edu.mx.crochetifyBack.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "review")
 public class Review {
 
     @Id
-    @Column(name = "id_review", nullable = false, length = 36)
+    @Column(name = "id_review")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReview;
 
-    @Column(name = "score", nullable = false)
+    @Column(name = "score")
     private int score;
 
-    @Column(name = "comment", nullable = false, length = 255)
-    private int comment;
+    @Column(name = "comment")
+    private String comment;
 
-
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

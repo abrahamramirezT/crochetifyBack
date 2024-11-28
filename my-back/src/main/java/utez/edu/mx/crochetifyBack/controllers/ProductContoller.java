@@ -9,7 +9,6 @@ import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.product.ProductCreateRequest;
 import utez.edu.mx.crochetifyBack.services.product.ProductService;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/products")
 public class ProductContoller {
