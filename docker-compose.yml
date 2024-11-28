@@ -6,7 +6,7 @@ services:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: crochetify
       MYSQL_USER: crochet
-      MYSQL_PASSWORD: password
+      MYSQL_PASSWORD: passwordcrochet
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:
