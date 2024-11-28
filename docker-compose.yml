@@ -6,11 +6,11 @@ services:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: crochetify
       MYSQL_USER: crochet
-      MYSQL_PASSWORD: passwordcrochet
+      MYSQL_PASSWORD: crochet
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - "3309:3306"
     restart: always
 
   app:
