@@ -36,7 +36,7 @@ public class Shipment {
 
     @OneToOne
     @JoinColumn(name = "id_orden", referencedColumnName = "id_orden")
-
+    @JsonIgnore
     private Orden orden;
 
 
