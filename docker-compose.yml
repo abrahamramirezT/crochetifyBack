@@ -9,6 +9,8 @@ services:
       MYSQL_PASSWORD: passwordcrochet
     volumes:
       - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
     restart: always
 
   app:
