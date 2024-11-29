@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
+import utez.edu.mx.crochetifyBack.dto.ShipmentDTO;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentUpdateRequest;
 import utez.edu.mx.crochetifyBack.entities.Orden;
@@ -130,8 +131,8 @@ public class ShipmentServiceImp implements ShipmentService{
         try {
             Shipment currentShipment = shipmentRepository.findById(idShipment)
                     .orElseThrow(() -> new CustomNotFoundException("Shipment con ID " + idShipment + " no encontrado"));
-
-            return createResponseObject("Shipment recuperado con éxito", currentShipment);
+            ShipmentDTO shipmentDTO=   convertToShipmentDTO(currentShipment);
+            return createResponseObject("Shipment recuperado con éxito", shipmentDTO);
 
         } catch (CustomNotFoundException e) {
             log.warn("Intento de recuperar el shipment que no existe: {}", e.getMessage());
@@ -143,7 +144,7 @@ public class ShipmentServiceImp implements ShipmentService{
         }
     }
 
-    private ResponseObject createResponseObject(String message, Shipment shipment) {
+    private ResponseObject createResponseObject(String message, ShipmentDTO shipment) {
         Map<String, Object> response = new HashMap<>();
         response.put("shipment", shipment);
         return new ResponseObject(true, message, response);
@@ -155,5 +156,15 @@ public class ShipmentServiceImp implements ShipmentService{
         return new ResponseList(true, message, response);
     }
 
+    private ShipmentDTO convertToShipmentDTO(Shipment shipment) {
+        return ShipmentDTO.builder()
+                .idOrden(shipment.getOrden().getIdOrden())
+                .total(shipment.getOrden().getTotal())
+                .status(shipment.getStatus())
+                .shipping_day(shipment.getShipping_day() != null ? shipment.getShipping_day().toString() : "")
+                .delivery_day(shipment.getDelivery_day() != null ? shipment.getDelivery_day().toString() : "")
+                .build();
+    }
+    
 
 }
