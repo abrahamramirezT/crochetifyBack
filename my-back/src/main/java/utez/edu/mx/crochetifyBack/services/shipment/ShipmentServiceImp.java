@@ -19,6 +19,7 @@ import utez.edu.mx.crochetifyBack.repositories.ShipmentRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -65,11 +66,16 @@ public class ShipmentServiceImp implements ShipmentService{
             if (shipments.isEmpty()) {
                 throw new CustomNotFoundException("No existen shipments registrados");
             }
-            return createResponseList("Shipments recuperados con éxito", shipments);
+
+            // Mapear los objetos Shipment a ShipmentDTO
+            List<ShipmentDTO> shipmentDTOs = shipments.stream()
+                    .map(this::convertToShipmentDTO)
+                    .collect(Collectors.toList());
+
+            return createResponseList("Shipments recuperados con éxito", shipmentDTOs);
         } catch (CustomNotFoundException e) {
             log.warn("Error: {}", e.getMessage());
             throw e;
-
         } catch (Exception e) {
             log.error("Ocurrió un error al recuperar los shipments: {}", e.getMessage());
             throw new CustomException("Ocurrió un error al recuperar los shipments");
@@ -150,7 +156,7 @@ public class ShipmentServiceImp implements ShipmentService{
         return new ResponseObject(true, message, response);
     }
 
-    private ResponseList createResponseList(String message, List<Shipment> shipments) {
+    private ResponseList createResponseList(String message, List<ShipmentDTO> shipments) {
         Map<String, List<?>> response = new HashMap<>();
         response.put("shipments", shipments);
         return new ResponseList(true, message, response);

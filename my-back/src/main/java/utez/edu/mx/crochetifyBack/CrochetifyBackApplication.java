@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CrochetifyBackApplication {
+public class 	CrochetifyBackApplication {
 	@Bean
 	public ModelMapper modelMapper(){return new ModelMapper();}
 

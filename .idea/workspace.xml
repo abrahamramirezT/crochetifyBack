@@ -4,24 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="faac43be-c921-497c-aab6-fcac58ee9e17" name="Changes" comment="" />
+    <list default="true" id="a9e32300-7449-44d0-95e2-b8e038cc46cf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-back/src/main/java/utez/edu/mx/crochetifyBack/CrochetifyBackApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/my-back/src/main/java/utez/edu/mx/crochetifyBack/CrochetifyBackApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-back/src/main/java/utez/edu/mx/crochetifyBack/services/shipment/ShipmentServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/my-back/src/main/java/utez/edu/mx/crochetifyBack/services/shipment/ShipmentServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/my-back/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="stock-service" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,25 +31,22 @@
     </option>
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2ozwFlXTKLZXfTGZDBweubPfuKS" />
+  <component name="ProjectId" id="2pYbu8VwruYVBOAbR5Ez0v69iSh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.CrochetifyBackApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/TRAFALGAR/Documents/GitHub/crochetifyBack&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/TRAFALGAR/Documents/GitHub/crochetifyBack/my-back&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -74,22 +68,21 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="faac43be-c921-497c-aab6-fcac58ee9e17" name="Changes" comment="" />
-      <created>1731885610873</created>
+      <changelist id="a9e32300-7449-44d0-95e2-b8e038cc46cf" name="Changes" comment="" />
+      <created>1732946175665</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1731885610873</updated>
-      <workItem from="1731885611921" duration="4291000" />
-      <workItem from="1731889935301" duration="3161000" />
-      <workItem from="1731903179272" duration="690000" />
+      <updated>1732946175665</updated>
+      <workItem from="1732946176841" duration="811000" />
+      <workItem from="1732947990314" duration="34000" />
     </task>
     <servers />
   </component>
