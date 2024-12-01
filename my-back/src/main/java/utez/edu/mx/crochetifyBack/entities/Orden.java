@@ -46,6 +46,8 @@ public class Orden {
     @JsonManagedReference
     private List<OrdenProduct> ordenProducts = new ArrayList<>();
 
-
+    @OneToOne(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private OrdenDirection ordenDirection;
 
 }

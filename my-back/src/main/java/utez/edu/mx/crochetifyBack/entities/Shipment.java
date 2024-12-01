@@ -1,14 +1,12 @@
 package utez.edu.mx.crochetifyBack.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,8 +33,8 @@ public class Shipment {
     private LocalDate delivery_day;
 
     @OneToOne
-    @JoinColumn(name = "id_orden", referencedColumnName = "id_orden")
-    @JsonIgnore
+    @JoinColumn(name = "id_orden", nullable = false)
+    @JsonBackReference
     private Orden orden;
 
 

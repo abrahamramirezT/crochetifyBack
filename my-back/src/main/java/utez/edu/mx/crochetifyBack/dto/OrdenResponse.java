@@ -16,5 +16,11 @@ import lombok.Setter;
 public class OrdenResponse {
     private Long idOrden;
     private double total;
+    private Long idShipment;
+    private int statusShipment;
+    private String shipping_day;
+    private String delivery_day;
+    private String ordenDirection;
+    private String phoneDirection;
     private List<StockDTO> ordenProducts;
 }

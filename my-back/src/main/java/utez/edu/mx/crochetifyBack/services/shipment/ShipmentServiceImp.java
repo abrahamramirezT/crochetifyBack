@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
+import utez.edu.mx.crochetifyBack.dto.ShipmentDTO;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.shipment.ShipmentUpdateRequest;
 import utez.edu.mx.crochetifyBack.entities.Orden;
@@ -18,6 +19,7 @@ import utez.edu.mx.crochetifyBack.repositories.ShipmentRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -64,11 +66,16 @@ public class ShipmentServiceImp implements ShipmentService{
             if (shipments.isEmpty()) {
                 throw new CustomNotFoundException("No existen shipments registrados");
             }
-            return createResponseList("Shipments recuperados con éxito", shipments);
+
+            // Mapear los objetos Shipment a ShipmentDTO
+            List<ShipmentDTO> shipmentDTOs = shipments.stream()
+                    .map(this::convertToShipmentDTO)
+                    .collect(Collectors.toList());
+
+            return createResponseList("Shipments recuperados con éxito", shipmentDTOs);
         } catch (CustomNotFoundException e) {
             log.warn("Error: {}", e.getMessage());
             throw e;
-
         } catch (Exception e) {
             log.error("Ocurrió un error al recuperar los shipments: {}", e.getMessage());
             throw new CustomException("Ocurrió un error al recuperar los shipments");
@@ -130,8 +137,8 @@ public class ShipmentServiceImp implements ShipmentService{
         try {
             Shipment currentShipment = shipmentRepository.findById(idShipment)
                     .orElseThrow(() -> new CustomNotFoundException("Shipment con ID " + idShipment + " no encontrado"));
-
-            return createResponseObject("Shipment recuperado con éxito", currentShipment);
+            ShipmentDTO shipmentDTO=   convertToShipmentDTO(currentShipment);
+            return createResponseObject("Shipment recuperado con éxito", shipmentDTO);
 
         } catch (CustomNotFoundException e) {
             log.warn("Intento de recuperar el shipment que no existe: {}", e.getMessage());
@@ -143,17 +150,27 @@ public class ShipmentServiceImp implements ShipmentService{
         }
     }
 
-    private ResponseObject createResponseObject(String message, Shipment shipment) {
+    private ResponseObject createResponseObject(String message, ShipmentDTO shipment) {
         Map<String, Object> response = new HashMap<>();
         response.put("shipment", shipment);
         return new ResponseObject(true, message, response);
     }
 
-    private ResponseList createResponseList(String message, List<Shipment> shipments) {
+    private ResponseList createResponseList(String message, List<ShipmentDTO> shipments) {
         Map<String, List<?>> response = new HashMap<>();
         response.put("shipments", shipments);
         return new ResponseList(true, message, response);
     }
 
+    private ShipmentDTO convertToShipmentDTO(Shipment shipment) {
+        return ShipmentDTO.builder()
+                .idOrden(shipment.getOrden().getIdOrden())
+                .total(shipment.getOrden().getTotal())
+                .status(shipment.getStatus())
+                .shipping_day(shipment.getShipping_day() != null ? shipment.getShipping_day().toString() : "")
+                .delivery_day(shipment.getDelivery_day() != null ? shipment.getDelivery_day().toString() : "")
+                .build();
+    }
+    
 
 }

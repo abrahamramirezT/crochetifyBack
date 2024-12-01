@@ -190,6 +190,7 @@ public class CartServiceImp implements CartService {
                                                 .stockId(cartProduct.getStock().getIdStock())
                                                 .color(cartProduct.getStock().getColor())
                                                 .quantity(cartProduct.getQuantity())
+                                                .images(cartProduct.getStock().getImages())
                                                 .product(ProductDTO.builder()
                                                                 .idProduct(cartProduct.getStock().getProduct()
                                                                                 .getIdProduct())

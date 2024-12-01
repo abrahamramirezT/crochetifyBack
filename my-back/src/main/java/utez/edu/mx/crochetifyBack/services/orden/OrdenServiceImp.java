@@ -19,13 +19,17 @@ import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.StockDTO;
 import utez.edu.mx.crochetifyBack.dto.requests.orden.OrdenCreateRequest;
 import utez.edu.mx.crochetifyBack.entities.Cart;
+import utez.edu.mx.crochetifyBack.entities.Direction;
 import utez.edu.mx.crochetifyBack.entities.Orden;
+import utez.edu.mx.crochetifyBack.entities.OrdenDirection;
 import utez.edu.mx.crochetifyBack.entities.OrdenProduct;
 import utez.edu.mx.crochetifyBack.entities.OrdenProductId;
 import utez.edu.mx.crochetifyBack.entities.User;
 import utez.edu.mx.crochetifyBack.exceptions.CustomException;
 import utez.edu.mx.crochetifyBack.exceptions.CustomNotFoundException;
 import utez.edu.mx.crochetifyBack.repositories.CartRepository;
+import utez.edu.mx.crochetifyBack.repositories.DirectionRepository;
+import utez.edu.mx.crochetifyBack.repositories.OrdenDirectionRepository;
 import utez.edu.mx.crochetifyBack.repositories.OrdenProductRepository;
 import utez.edu.mx.crochetifyBack.repositories.OrdenRepository;
 import utez.edu.mx.crochetifyBack.repositories.UserRepository;
@@ -47,6 +51,12 @@ public class OrdenServiceImp implements OrdenService {
         @Autowired
         private OrdenProductRepository ordenProductRepository;
 
+        @Autowired
+        private OrdenDirectionRepository ordenDirectionRepository;
+
+        @Autowired
+        private DirectionRepository directionRepository;
+
         @Override
         @Transactional
         public ResponseObject createOrden(OrdenCreateRequest request) {
@@ -56,6 +66,8 @@ public class OrdenServiceImp implements OrdenService {
                 Cart currentCart = cartRepository.findByUser(currentUser)
                                 .orElseThrow(() -> new CustomNotFoundException(
                                                 "El usuario no cuenta con un carrito registrado"));
+                Direction currentDirection = directionRepository.findById(request.getIdDirection())
+                                .orElseThrow(() -> new CustomNotFoundException("Direccion no econtrada"));
                 try {
 
                         Orden orden = Orden.builder()
@@ -87,6 +99,13 @@ public class OrdenServiceImp implements OrdenService {
 
                         currentCart.getCartProducts().clear();
                         cartRepository.delete(currentCart);
+
+                        OrdenDirection ordenDirection = OrdenDirection.builder()
+                        .direction(currentDirection.getDirection())
+                        .phone(currentDirection.getPhone())
+                        .orden(savedOrden)
+                        .build();
+                        ordenDirectionRepository.save(ordenDirection);
                         return new ResponseObject(true, "Pedido registrada con éxito", null);
 
                 } catch (Exception e) {
@@ -139,7 +158,7 @@ public class OrdenServiceImp implements OrdenService {
                         return createResponseList("Pedidos recuperados con éxito", ordenResponses);
 
                 } catch (Exception e) {
-                        throw new CustomException("Ocurrió un error al registrar el pedido");
+                        throw new CustomException("Ocurrió un error al registrar el pedido" + e.getMessage());
                 }
 
         }
@@ -170,6 +189,7 @@ public class OrdenServiceImp implements OrdenService {
                                                 .stockId(cartProduct.getStock().getIdStock())
                                                 .color(cartProduct.getStock().getColor())
                                                 .quantity(cartProduct.getQuantity())
+                                                .images(cartProduct.getStock().getImages())
                                                 .product(ProductDTO.builder()
                                                                 .idProduct(cartProduct.getStock().getProduct()
                                                                                 .getIdProduct())
@@ -184,6 +204,28 @@ public class OrdenServiceImp implements OrdenService {
                 return OrdenResponse.builder()
                                 .idOrden(orden.getIdOrden())
                                 .total(orden.getTotal())
+                                .idShipment(orden.getShipment() != null && orden.getShipment().getIdShipment() != null
+                                                ? orden.getShipment().getIdShipment()
+                                                : 0)
+                                .statusShipment(orden.getShipment() != null && orden.getShipment().getStatus() != 0
+                                                ? orden.getShipment().getStatus()
+                                                : 0)
+                                .shipping_day(orden.getShipment() != null
+                                                && orden.getShipment().getShipping_day() != null
+                                                                ? orden.getShipment().getShipping_day().toString()
+                                                                : "")
+                                .delivery_day(orden.getShipment() != null
+                                                && orden.getShipment().getDelivery_day() != null
+                                                                ? orden.getShipment().getDelivery_day().toString()
+                                                                : "")
+                                .ordenDirection(orden.getOrdenDirection() != null
+                                                && orden.getOrdenDirection().getDirection() != null
+                                                                ? orden.getOrdenDirection().getDirection()
+                                                                : "")
+                                .phoneDirection(orden.getOrdenDirection() != null
+                                                && orden.getOrdenDirection().getPhone() != null
+                                                                ? orden.getOrdenDirection().getPhone()
+                                                                : "")
                                 .ordenProducts(stockDTOs)
                                 .build();
         }
