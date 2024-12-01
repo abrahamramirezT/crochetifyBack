@@ -10,4 +10,5 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class OrdenCreateRequest {
     private Long idUser;
+    private Long idDirection;
 }

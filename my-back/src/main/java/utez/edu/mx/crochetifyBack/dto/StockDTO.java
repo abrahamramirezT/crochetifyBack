@@ -1,10 +1,13 @@
 package utez.edu.mx.crochetifyBack.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import utez.edu.mx.crochetifyBack.entities.Image;
 
 @Getter
 @Setter
@@ -16,4 +19,5 @@ public class StockDTO {
     private String color;
     private int quantity; 
     private ProductDTO product;
+    private List<Image> images;
 }
