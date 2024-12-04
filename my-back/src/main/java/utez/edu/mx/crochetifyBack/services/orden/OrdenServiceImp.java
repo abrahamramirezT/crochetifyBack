@@ -24,6 +24,7 @@ import utez.edu.mx.crochetifyBack.entities.Orden;
 import utez.edu.mx.crochetifyBack.entities.OrdenDirection;
 import utez.edu.mx.crochetifyBack.entities.OrdenProduct;
 import utez.edu.mx.crochetifyBack.entities.OrdenProductId;
+import utez.edu.mx.crochetifyBack.entities.Stock;
 import utez.edu.mx.crochetifyBack.entities.User;
 import utez.edu.mx.crochetifyBack.exceptions.CustomException;
 import utez.edu.mx.crochetifyBack.exceptions.CustomNotFoundException;
@@ -32,6 +33,7 @@ import utez.edu.mx.crochetifyBack.repositories.DirectionRepository;
 import utez.edu.mx.crochetifyBack.repositories.OrdenDirectionRepository;
 import utez.edu.mx.crochetifyBack.repositories.OrdenProductRepository;
 import utez.edu.mx.crochetifyBack.repositories.OrdenRepository;
+import utez.edu.mx.crochetifyBack.repositories.StockRepository;
 import utez.edu.mx.crochetifyBack.repositories.UserRepository;
 
 @Service
@@ -56,6 +58,9 @@ public class OrdenServiceImp implements OrdenService {
 
         @Autowired
         private DirectionRepository directionRepository;
+
+        @Autowired
+        private StockRepository stockRepository;
 
         @Override
         @Transactional
@@ -106,11 +111,24 @@ public class OrdenServiceImp implements OrdenService {
                         .orden(savedOrden)
                         .build();
                         ordenDirectionRepository.save(ordenDirection);
+                        for (OrdenProduct ordenProduct : ordenProducts) {
+                                Stock stock = ordenProduct.getStock();
+                                int newQuantity = stock.getQuantity() - ordenProduct.getQuantity();
+
+                                if (newQuantity < 0) {
+                                        throw new CustomException(
+                                                        "Stock insuficiente para el producto: " + stock.getIdStock());
+                                }
+
+                                stock.setQuantity(newQuantity);
+                                stockRepository.save(stock);
+                        }
+
                         return new ResponseObject(true, "Pedido registrada con éxito", null);
 
                 } catch (Exception e) {
                         log.error("Ocurrió un error al registrar el pedido: {}", e.getMessage(), e);
-                        throw new CustomException("Ocurrió un error al registrar el pedido" + e.getMessage());
+                        throw new CustomException( e.getMessage());
                 }
         }
 

@@ -21,6 +21,7 @@ import utez.edu.mx.crochetifyBack.entities.CartProduct;
 import utez.edu.mx.crochetifyBack.entities.CartProductId;
 import utez.edu.mx.crochetifyBack.entities.Stock;
 import utez.edu.mx.crochetifyBack.entities.User;
+import utez.edu.mx.crochetifyBack.exceptions.CustomException;
 import utez.edu.mx.crochetifyBack.exceptions.CustomNotFoundException;
 import utez.edu.mx.crochetifyBack.repositories.CartRepository;
 import utez.edu.mx.crochetifyBack.repositories.StockRepository;
@@ -71,6 +72,13 @@ public class CartServiceImp implements CartService {
                                 throw new CustomNotFoundException(
                                                 "La cantidad debe ser mayor a 0 para crear un carrito");
                         }
+                        if (request.getQuantity() > currentStock.getQuantity()) {
+                                throw new CustomException("Producto: "
+                                        + currentStock.getProduct().getName() + " Color: "
+                                        + currentStock.getColor() + " solo tiene disponible: "
+                                        + currentStock.getQuantity()+" unidades");
+                            }
+                    
 
                         Cart currentCart = Cart.builder()
                                         .user(currentUser)
@@ -99,7 +107,7 @@ public class CartServiceImp implements CartService {
                         return createResponseObject("Carrito creado correctamente", null);
 
                 } catch (Exception e) {
-                        throw new CustomNotFoundException("Error al crear el carrito: " + e.getMessage());
+                        throw new CustomNotFoundException( e.getMessage());
                 }
         }
 
@@ -107,10 +115,10 @@ public class CartServiceImp implements CartService {
         public ResponseObject updateCart(CartUpdateRequest request) {
                 try {
                         User currentUser = userRepository.findById(request.getIdUser())
-                        .orElseThrow(() -> new CustomNotFoundException(
-                                        "Usuario no encontrado"));
-                        
-                          Optional<Cart> existingCart = cartRepository.findByUser(currentUser);
+                                        .orElseThrow(() -> new CustomNotFoundException(
+                                                        "Usuario no encontrado"));
+
+                        Optional<Cart> existingCart = cartRepository.findByUser(currentUser);
                         if (existingCart.isEmpty()) {
                                 throw new CustomNotFoundException("El usuario no cuenta con un carrito registrado");
                         }
@@ -131,6 +139,7 @@ public class CartServiceImp implements CartService {
 
                         if (existingCartProduct.isPresent()) {
                                 CartProduct cartProduct = existingCartProduct.get();
+                                Stock stock = cartProduct.getStock();
 
                                 if (request.getQuantity() == 0) {
                                         currentCart.getCartProducts().remove(cartProduct);
@@ -146,6 +155,12 @@ public class CartServiceImp implements CartService {
                                         double updatedTotal = currentCart.getTotal()
                                                         + (currentStock.getPrice() * difference);
                                         currentCart.setTotal(updatedTotal);
+
+                                        if (request.getQuantity() > stock.getQuantity()) {
+                                                throw new CustomException("Producto: " + stock.getProduct().getName()
+                                                                + " Color: " + stock.getColor()
+                                                                + " solo tiene disponible: " + stock.getQuantity());
+                                        }
                                 }
                         } else {
                                 if (request.getQuantity() != 0) {
@@ -161,6 +176,12 @@ public class CartServiceImp implements CartService {
                                         double updatedTotal = currentCart.getTotal()
                                                         + (currentStock.getPrice() * request.getQuantity());
                                         currentCart.setTotal(updatedTotal);
+                                        if (request.getQuantity() > currentStock.getQuantity()) {
+                                                throw new CustomException("Producto: "
+                                                                + currentStock.getProduct().getName() + " Color: "
+                                                                + currentStock.getColor() + " solo tiene disponible: "
+                                                                + currentStock.getQuantity());
+                                        }
                                 }
 
                         }
@@ -170,7 +191,7 @@ public class CartServiceImp implements CartService {
                         return createResponseObject("Carrito actualizado", null);
 
                 } catch (Exception e) {
-                        throw new CustomNotFoundException("Error al actualizar el carrito :" + e.getMessage());
+                        throw new CustomException(e.getMessage());
                 }
         }
 
