@@ -27,4 +27,4 @@ services:
       - mysql-db
     restart: always
 
-    #Pruebas nueva intancia
+    #Pruebas nueva intancia 2
