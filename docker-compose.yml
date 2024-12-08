@@ -3,28 +3,26 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: crochetify
+      MYSQL_DATABASE: crochetifyfinal
       MYSQL_USER: crochet
-      MYSQL_PASSWORD: passwordcrochet
+      MYSQL_PASSWORD: crochet123
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./mysql-integradora:/var/lib/mysql
     ports:
       - "3307:3306"
-    restart: always
+    restart: unless-stopped
 
   app:
     build:
       context: ./my-back
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/crochetify
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/crochetifyfinal
       SPRING_DATASOURCE_USERNAME: crochet
-      SPRING_DATASOURCE_PASSWORD: passwordcrochet
-      SPRING_JPA_HIBERNATE_DDL_AUTO: create
+      SPRING_DATASOURCE_PASSWORD: crochet123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
       - "8087:8080"
     depends_on:
       - mysql-db
-    restart: always
-
-    #Pruebas nueva intancia 5
+    restart: unless-stopped
