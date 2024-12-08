@@ -10,7 +10,7 @@ services:
       - ./mysql-integradora:/var/lib/mysql
     ports:
       - "3307:3306"
-    restart: unless-stopped
+    restart: always
 
   app:
     build:
@@ -25,4 +25,4 @@ services:
       - "8087:8080"
     depends_on:
       - mysql-db
-    restart: unless-stopped
+    restart: always
