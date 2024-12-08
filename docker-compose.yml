@@ -20,7 +20,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/crochetify
       SPRING_DATASOURCE_USERNAME: crochet
       SPRING_DATASOURCE_PASSWORD: passwordcrochet
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
     ports:
       - "8087:8080"
     depends_on:
