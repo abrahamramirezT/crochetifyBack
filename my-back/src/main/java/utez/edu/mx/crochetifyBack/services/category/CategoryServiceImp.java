@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryCreateRequest;
+import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryUpdateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryUpdateStatusRequest;
 import utez.edu.mx.crochetifyBack.entities.Category;
 import utez.edu.mx.crochetifyBack.exceptions.CustomException;
@@ -37,6 +38,28 @@ public class CategoryServiceImp implements CategoryService {
         } catch (Exception e) {
             log.error("Ocurrio un error al registar la categoria : {}", e.getMessage(), e);
             throw new CustomException("Ocurrio un error al registrar la categoria");
+        }
+    }
+
+    @Override
+    public ResponseObject updateCategory(CategoryUpdateRequest request) {
+        try {
+            Category currentCategory = categoryRepository.findById(request.getIdCategory())
+                    .orElseThrow(() -> new CustomNotFoundException(
+                            "Categoría no encontrada"));
+
+            if (!currentCategory.getName().equals(request.getName())) {
+                currentCategory.setName(request.getName());
+                categoryRepository.save(currentCategory);
+            }
+
+            return new ResponseObject(true, "Nombre de la categoría actualizado con éxito", null);
+        } catch (CustomNotFoundException e) {
+            log.warn("Intento de actualizar una categoría que no existe: {}");
+            throw e;
+        } catch (Exception e) {
+            log.error("Ocurrió un error al actualizar el nombre de la categoría: {}", e.getMessage());
+            throw new CustomException("Ocurrió un error al actualizar el nombre de la categoría");
         }
     }
 
