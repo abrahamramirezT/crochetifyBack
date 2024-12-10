@@ -9,7 +9,6 @@ import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryUpdateStatusRequest;
 import utez.edu.mx.crochetifyBack.entities.Category;
-import utez.edu.mx.crochetifyBack.entities.User;
 import utez.edu.mx.crochetifyBack.exceptions.CustomException;
 import utez.edu.mx.crochetifyBack.exceptions.CustomNotFoundException;
 import utez.edu.mx.crochetifyBack.repositories.CategoryRepository;

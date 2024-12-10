@@ -17,7 +17,7 @@ import utez.edu.mx.crochetifyBack.entities.Image;
 public class StockDTO {
     private Long stockId;
     private String color;
-    private int quantity; 
+    private Long quantity; 
     private ProductDTO product;
     private List<Image> images;
 }

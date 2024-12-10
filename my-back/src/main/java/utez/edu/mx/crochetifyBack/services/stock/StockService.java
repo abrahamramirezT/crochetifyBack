@@ -2,7 +2,6 @@ package utez.edu.mx.crochetifyBack.services.stock;
 
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
-import utez.edu.mx.crochetifyBack.dto.requests.product.ProductCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.stock.StockCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.stock.StockUpdateRequest;
 

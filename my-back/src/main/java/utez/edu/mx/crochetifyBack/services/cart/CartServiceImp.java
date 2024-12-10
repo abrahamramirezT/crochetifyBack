@@ -148,7 +148,7 @@ public class CartServiceImp implements CartService {
                                                         - (cartProduct.getQuantity() * currentStock.getPrice());
                                         currentCart.setTotal(updatedTotal);
                                 } else {
-                                        int difference = request.getQuantity() - cartProduct.getQuantity();
+                                        Long difference = request.getQuantity() - cartProduct.getQuantity();
 
                                         cartProduct.setQuantity(request.getQuantity());
 

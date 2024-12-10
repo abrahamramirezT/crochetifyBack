@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import utez.edu.mx.crochetifyBack.entities.Cart;
 import utez.edu.mx.crochetifyBack.entities.User;
 
-import java.util.List;
 import java.util.Optional;
 
 

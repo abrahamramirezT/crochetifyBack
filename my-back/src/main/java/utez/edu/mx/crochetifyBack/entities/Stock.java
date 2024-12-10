@@ -23,7 +23,7 @@ public class Stock {
     private String color;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Long quantity;
 
     @Column(name= "price")
     private double price;

@@ -39,7 +39,6 @@ public class ReviewServiceImp  implements ReviewService{
                     .product(product)
                     .build();
 
-            // Guardar la reseña
             reviewRepository.save(review);
 
             return new ResponseObject(true, "Review registrada con éxito", null);

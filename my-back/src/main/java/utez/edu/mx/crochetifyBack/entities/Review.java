@@ -3,8 +3,6 @@ package utez.edu.mx.crochetifyBack.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +21,7 @@ public class Review {
     @Column(name = "score")
     private int score;
 
-    @Column(name = "comment")
+    @Column(name = "comment", length = 1500) 
     private String comment;
 
     @ManyToOne()

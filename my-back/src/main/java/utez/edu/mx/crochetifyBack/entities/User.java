@@ -30,13 +30,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 300) 
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 300) 
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 300) 
     private String password;
 
     @Column(name = "status")

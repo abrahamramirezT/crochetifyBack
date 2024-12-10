@@ -45,7 +45,7 @@ public class ShipmentServiceImp implements ShipmentService{
                     .orden(orden)
                     .build();
 
-            Shipment savedShipment = shipmentRepository.save(shipment);
+            shipmentRepository.save(shipment);
 
             return new ResponseObject(true, "Shipment registrado con éxito", null);
 
@@ -67,7 +67,6 @@ public class ShipmentServiceImp implements ShipmentService{
                 throw new CustomNotFoundException("No existen shipments registrados");
             }
 
-            // Mapear los objetos Shipment a ShipmentDTO
             List<ShipmentDTO> shipmentDTOs = shipments.stream()
                     .map(this::convertToShipmentDTO)
                     .collect(Collectors.toList());
@@ -91,7 +90,7 @@ public class ShipmentServiceImp implements ShipmentService{
             existingShipment.setDelivery_day(request.getDelivery_day());
             existingShipment.setStatus(2);
 
-            Shipment updatedShipment = shipmentRepository.save(existingShipment);
+            shipmentRepository.save(existingShipment);
 
             return new ResponseObject(true, "Shipment actualizado con éxito", null);
 
@@ -116,7 +115,7 @@ public class ShipmentServiceImp implements ShipmentService{
 
             existingShipment.setStatus(3);
 
-            Shipment updatedShipment = shipmentRepository.save(existingShipment);
+            shipmentRepository.save(existingShipment);
 
             return new ResponseObject(true, "Estado del Shipment actualizado a 3 con éxito", null);
 

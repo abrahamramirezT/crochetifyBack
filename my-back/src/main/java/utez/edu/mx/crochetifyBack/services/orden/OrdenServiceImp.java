@@ -113,7 +113,7 @@ public class OrdenServiceImp implements OrdenService {
                         ordenDirectionRepository.save(ordenDirection);
                         for (OrdenProduct ordenProduct : ordenProducts) {
                                 Stock stock = ordenProduct.getStock();
-                                int newQuantity = stock.getQuantity() - ordenProduct.getQuantity();
+                                Long newQuantity = stock.getQuantity() - ordenProduct.getQuantity();
 
                                 if (newQuantity < 0) {
                                         throw new CustomException(

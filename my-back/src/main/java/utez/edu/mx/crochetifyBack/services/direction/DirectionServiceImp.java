@@ -1,15 +1,12 @@
 package utez.edu.mx.crochetifyBack.services.direction;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionUpdateRequest;
-import utez.edu.mx.crochetifyBack.dto.requests.direction.DirectionUserRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.direction.SetDefaultDirectionRequest;
 import utez.edu.mx.crochetifyBack.entities.Direction;
 import utez.edu.mx.crochetifyBack.entities.User;
@@ -21,8 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class DirectionServiceImp implements DirectionService{
@@ -50,10 +45,7 @@ public class DirectionServiceImp implements DirectionService{
                     .build();
 
 
-            Direction savedDirection = directionRepository.save(direction);
-
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> directionMap = mapper.convertValue(savedDirection, Map.class);
+            directionRepository.save(direction);
 
             return new ResponseObject(true, "Dirección registrada con éxito", null);
 
@@ -76,10 +68,7 @@ public class DirectionServiceImp implements DirectionService{
             existingDirection.setDirection(request.getDirection());
             existingDirection.setPhone(request.getPhone());
 
-            Direction updatedDirection = directionRepository.save(existingDirection);
-
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> directionMap = mapper.convertValue(updatedDirection, Map.class);
+            directionRepository.save(existingDirection);
 
             return new ResponseObject(true, "Dirección actualizada con éxito", null);
 
@@ -108,11 +97,11 @@ public class DirectionServiceImp implements DirectionService{
                             direction -> Map.of(
                                     "idDirection", direction.getIdDirection(),
                                     "direction", direction.getDirection(),
-                                    "phone", direction.getPhone()
+                                    "phone", direction.getPhone(),
+                                    "isDefault",direction.isDefault()
                             )
                     ));
 
-            // Retornar la respuesta con éxito
             return new ResponseObject(true, "Direcciones encontradas con éxito", directionMap);
 
         } catch (Exception e) {
