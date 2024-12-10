@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryCreateRequest;
+import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryUpdateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.category.CategoryUpdateStatusRequest;
 import utez.edu.mx.crochetifyBack.services.category.CategoryService;
 @RestController
@@ -19,6 +20,11 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<ResponseObject> createCategory(@RequestBody CategoryCreateRequest request){
         ResponseObject response = categoryService. createCategory(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    @PutMapping
+    public ResponseEntity<ResponseObject> updateCategory(@RequestBody CategoryUpdateRequest request){
+        ResponseObject response = categoryService.updateCategory(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
