@@ -11,7 +11,7 @@ public class StockCreateRequest {
 
     private String color;
     private Double price;
-    private int quantity;
+    private Long quantity;
     private Long productId;
     private List<String> images;
 }

@@ -3,9 +3,7 @@ package utez.edu.mx.crochetifyBack.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -21,10 +19,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProduct;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 300) 
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;
 
     @Column(name = "status")

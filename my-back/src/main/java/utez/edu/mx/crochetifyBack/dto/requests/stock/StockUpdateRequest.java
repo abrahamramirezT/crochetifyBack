@@ -15,7 +15,7 @@ public class StockUpdateRequest {
 
     private Double price;
 
-    private Integer quantity;
+    private Long quantity;
 
     private Boolean status;
 

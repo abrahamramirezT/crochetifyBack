@@ -3,7 +3,6 @@ package utez.edu.mx.crochetifyBack.services.product;
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
 import utez.edu.mx.crochetifyBack.dto.requests.product.ProductCreateRequest;
-import utez.edu.mx.crochetifyBack.dto.requests.product.ProductUpdateRequest;
 
 public interface ProductService {
 

@@ -40,6 +40,6 @@ public class CartProduct {
     private Stock stock;
 
     @Column(name = "quantity", nullable = false)
-    private int quantity;
+    private Long quantity;
 
 }

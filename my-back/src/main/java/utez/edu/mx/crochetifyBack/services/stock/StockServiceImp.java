@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.crochetifyBack.dto.ResponseList;
 import utez.edu.mx.crochetifyBack.dto.ResponseObject;
-import utez.edu.mx.crochetifyBack.dto.requests.product.ProductCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.stock.StockCreateRequest;
 import utez.edu.mx.crochetifyBack.dto.requests.stock.StockUpdateRequest;
-import utez.edu.mx.crochetifyBack.entities.Category;
 import utez.edu.mx.crochetifyBack.entities.Image;
 import utez.edu.mx.crochetifyBack.entities.Product;
 import utez.edu.mx.crochetifyBack.entities.Stock;
@@ -147,10 +145,6 @@ public class StockServiceImp implements StockService{
                     imageRepository.save(image);
                 });
             }
-
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> stockMap = mapper.convertValue(updatedStock, Map.class);
-
             return new ResponseObject(true, "Stock actualizado con éxito", null);
 
         } catch (Exception e) {

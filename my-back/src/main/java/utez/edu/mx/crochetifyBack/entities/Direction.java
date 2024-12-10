@@ -18,7 +18,7 @@ public class Direction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDirection;
 
-    @Column(name = "direction")
+    @Column(name = "direction", columnDefinition = "LONGTEXT")
     private String direction;
 
     @Column(name = "phone")
